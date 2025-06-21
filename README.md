@@ -14,8 +14,22 @@
 ![alt text](asset/image-1.png)
 ### 2. `F12` 또는 `cmd/ctrl+ option/alt + I`를 눌러 개발자도구를 연다.
 ![alt text](asset/image-2.png)
-### 3. `Console` 탭에 들어가 영상에 맞는 스크립트를 붙여넣고 엔터를 누른다.
-![alt text](asset/image-3.png)
+### 3. `Console` 탭에 들어가 아래의 코드 중 하나를 붙여넣고 엔터를 누른다.
+#### 영상이 하나인 강의
+```js
+const script = document.createElement('script');
+script.type = 'module';
+script.src = 'https://cdn.jsdelivr.net/gh/junepil/lab-safety/lab_1.js';
+document.head.appendChild(script);
+```
+#### 영상이 여러개인 강의
+```js
+const script = document.createElement('script');
+script.type = 'module';
+script.src = 'https://cdn.jsdelivr.net/gh/junepil/lab-safety/lab_2.js';
+document.head.appendChild(script);
+```
+
 ### 4. 행복해진다. 😎
 
 ## 주의사항 ⚠️
