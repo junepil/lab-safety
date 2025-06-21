@@ -14,4 +14,14 @@ const response = await fetch(
   },
 );
 
-console.log(response);
+if (response.ok) {
+  console.log(
+    "%c수강 처리 완료",
+    "background: green; border-radius: 8px; padding: 4px; font-style: bold;",
+  );
+} else {
+  console.log(
+    "%c수강 처리 실패",
+    "background: green; border-radius: 8px; padding: 4px; font-style: bold;",
+  );
+}
