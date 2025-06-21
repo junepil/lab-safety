@@ -190,7 +190,7 @@ function _lab_() {
         case 0:
           _params = new URLSearchParams(window.location.search);
           scheduleMemberProgressNo = _params.get("smProgressNo");
-          totalPageElement = document.querySelector(".total_page");
+          totalPageElement = document.querySelector(".total_page, .tPageNum");
           totalPage = +(totalPageElement === null || totalPageElement === void 0 ? void 0 : totalPageElement.innerHTML);
           i = 1;
         case 1:

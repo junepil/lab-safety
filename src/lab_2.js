@@ -4,7 +4,7 @@ async function lab_2() {
   const _params = new URLSearchParams(window.location.search);
   const scheduleMemberProgressNo = _params.get("smProgressNo");
 
-  const totalPageElement = document.querySelector(".total_page");
+  const totalPageElement = document.querySelector(".total_page, .tPageNum");
   const totalPage = +totalPageElement?.innerHTML;
 
   for (let i = 1; i <= totalPage; ++i) {
