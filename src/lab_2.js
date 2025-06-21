@@ -1,3 +1,5 @@
+import createLog from "./log.js";
+
 async function lab_2() {
   const _params = new URLSearchParams(window.location.search);
   const scheduleMemberProgressNo = _params.get("smProgressNo");
@@ -18,17 +20,7 @@ async function lab_2() {
       },
     );
 
-    if (response.ok) {
-      console.log(
-        `%c${i}번째 영상 수강 처리 완료`,
-        "background: green; border-radius: 8px; padding: 4px; font-style: bold;",
-      );
-    } else {
-      console.log(
-        `%c${i}번째 영상 수강 처리 실패`,
-        "background: green; border-radius: 8px; padding: 4px; font-style: bold;",
-      );
-    }
+    createLog(response.ok, i);
   }
 }
 
