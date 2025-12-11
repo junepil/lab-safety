@@ -1,3 +1,8 @@
+function _arrayLikeToArray(r, a) {
+  (null == a || a > r.length) && (a = r.length);
+  for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e];
+  return n;
+}
 function asyncGeneratorStep(n, t, e, r, o, a, c) {
   try {
     var i = n[a](c),
@@ -21,6 +26,54 @@ function _asyncToGenerator(n) {
       }
       _next(void 0);
     });
+  };
+}
+function _createForOfIteratorHelper(r, e) {
+  var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
+  if (!t) {
+    if (Array.isArray(r) || (t = _unsupportedIterableToArray(r)) || e) {
+      t && (r = t);
+      var n = 0,
+        F = function () {};
+      return {
+        s: F,
+        n: function () {
+          return n >= r.length ? {
+            done: true
+          } : {
+            done: false,
+            value: r[n++]
+          };
+        },
+        e: function (r) {
+          throw r;
+        },
+        f: F
+      };
+    }
+    throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+  }
+  var o,
+    a = true,
+    u = false;
+  return {
+    s: function () {
+      t = t.call(r);
+    },
+    n: function () {
+      var r = t.next();
+      return a = r.done, r;
+    },
+    e: function (r) {
+      u = true, o = r;
+    },
+    f: function () {
+      try {
+        a || null == t.return || t.return();
+      } finally {
+        if (u) throw o;
+      }
+    }
   };
 }
 function _regenerator() {
@@ -133,6 +186,13 @@ function _regeneratorDefine(e, r, n, t) {
     }
   }, _regeneratorDefine(e, r, n, t);
 }
+function _unsupportedIterableToArray(r, a) {
+  if (r) {
+    if ("string" == typeof r) return _arrayLikeToArray(r, a);
+    var t = {}.toString.call(r).slice(8, -1);
+    return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0;
+  }
+}
 
 function _useMessage(payload) {
   return "%c".concat(payload);
@@ -155,101 +215,108 @@ function _useLog(message, style) {
 }
 function logProgression(success) {
   var index = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-  var result = success ? '수강 처리 완료' : '수강 처리 실패';
-  var message = _useMessage("".concat(index, "\uBC88\uC9F8 \uC601\uC0C1 ").concat(result));
-  if (success) {
+  var result = '수강 처리 완료' ;
+  var message = _useMessage("".concat(index, " ").concat(result));
+  {
     _useLog(message, 'success');
-  } else {
-    _useLog(message, 'fail');
   }
 }
-function logExit() {
-  var message = _useMessage('창을 닫아요 😎');
+function logFinish() {
+  var message = _useMessage('안전교육 학습이 종료됐어요 😎');
   _useLog(message, 'info');
 }
 
-function lab_1() {
-  return _lab_$1.apply(this, arguments);
+function getVideos() {
+  var table = document.querySelector('#divProgressInfList > table > tbody');
+  var videos = [];
+  var _iterator = _createForOfIteratorHelper(table.children),
+    _step;
+  try {
+    for (_iterator.s(); !(_step = _iterator.n()).done;) {
+      var row = _step.value;
+      if (row.className === 'edufireTableTop') continue;
+      var td = row.lastElementChild;
+      var input = td.lastElementChild;
+      var functionString = input.getAttribute('onclick');
+      var match = functionString.match(/OpenContentViewPop\((\d+)\)/);
+      var videoId = Number(match[1]);
+      videos.push(videoId);
+    }
+  } catch (err) {
+    _iterator.e(err);
+  } finally {
+    _iterator.f();
+  }
+  return videos;
 }
-function _lab_$1() {
-  _lab_$1 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {
-    var params, scheduleMemberProgressNo, response;
-    return _regenerator().w(function (_context) {
-      while (1) switch (_context.n) {
-        case 0:
-          params = new URLSearchParams(window.location.search);
-          scheduleMemberProgressNo = params.get('scheduleMemberProgressNo');
-          _context.n = 1;
-          return fetch('https://safety.konkuk.ac.kr/ushm/edu/contentsViewAviProcessCheckSub', {
-            method: 'POST',
-            body: new URLSearchParams({
-              scheduleMemberProgressNo: scheduleMemberProgressNo,
-              currentTime: '23',
-              isEnd: 'true',
-              isMobile: 'false'
-            })
-          });
-        case 1:
-          response = _context.v;
-          logProgression(response.ok);
-        case 2:
-          return _context.a(2);
+function processSingleVideo(video) {
+  return new Promise(function (resolve) {
+    var child = window.open("/ushm/edu/contentsViewPop.do?scheduleMemberProgressNo=".concat(video));
+    var isScriptInjected = false;
+    var checkLoad = setInterval(function () {
+      if (child.closed) {
+        clearInterval(checkLoad);
+        logProgression(true, video); // 기존 로직
+        resolve();
+        return;
       }
-    }, _callee);
-  }));
-  return _lab_$1.apply(this, arguments);
+      if (!isScriptInjected && child.document.readyState === 'complete') {
+        var script = child.document.createElement('script');
+        script.type = 'module';
+        script.src = 'https://cdn.jsdelivr.net/gh/junepil/lab-safety@batch-resolver/dist/video_resolver.js';
+        child.document.head.appendChild(script);
+        isScriptInjected = true;
+      }
+    }, 500);
+  });
 }
-
-function lab_2() {
-  return _lab_.apply(this, arguments);
+function processVideos(_x) {
+  return _processVideos.apply(this, arguments);
 }
-function _lab_() {
-  _lab_ = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {
-    var _params, scheduleMemberProgressNo, totalPageElement, totalPage, i, response;
+function _processVideos() {
+  _processVideos = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee(videos) {
+    var _iterator2, _step2, video, _t;
     return _regenerator().w(function (_context) {
       while (1) switch (_context.n) {
         case 0:
-          _params = new URLSearchParams(window.location.search);
-          scheduleMemberProgressNo = _params.get('smProgressNo');
-          totalPageElement = document.querySelector('.total_page, .tPageNum');
-          totalPage = +(totalPageElement === null || totalPageElement === void 0 ? void 0 : totalPageElement.innerHTML);
-          i = 1;
-        case 1:
-          if (!(i <= totalPage)) {
-            _context.n = 4;
+          _iterator2 = _createForOfIteratorHelper(videos);
+          _context.p = 1;
+          _iterator2.s();
+        case 2:
+          if ((_step2 = _iterator2.n()).done) {
+            _context.n = 5;
             break;
           }
-          _context.n = 2;
-          return fetch('https://safety.konkuk.ac.kr/ushm/edu/SetImgtechContents2019AfterVersionProcessUpdate', {
-            method: 'POST',
-            body: new URLSearchParams({
-              scheduleMemberProgressNo: scheduleMemberProgressNo,
-              watchedpage: i,
-              gapTime: 3600
-            })
-          });
-        case 2:
-          response = _context.v;
-          logProgression(response.ok, i);
+          video = _step2.value;
+          console.log("Video ".concat(video, " \uCC98\uB9AC \uC2DC\uC791..."));
+          _context.n = 3;
+          return processSingleVideo(video);
         case 3:
-          ++i;
-          _context.n = 1;
-          break;
+          console.log("Video ".concat(video, " \uCC98\uB9AC \uC644\uB8CC."));
         case 4:
+          _context.n = 2;
+          break;
+        case 5:
+          _context.n = 7;
+          break;
+        case 6:
+          _context.p = 6;
+          _t = _context.v;
+          _iterator2.e(_t);
+        case 7:
+          _context.p = 7;
+          _iterator2.f();
+          return _context.f(7);
+        case 8:
+          console.log('모든 비디오 처리 완료!');
+        case 9:
           return _context.a(2);
       }
-    }, _callee);
+    }, _callee, null, [[1, 6, 7, 8]]);
   }));
-  return _lab_.apply(this, arguments);
+  return _processVideos.apply(this, arguments);
 }
 
-var _params = new URLSearchParams(window.location.search);
-if (_params.get('scheduleMemberProgressNo')) {
-  await lab_1();
-} else {
-  await lab_2();
-}
-logExit();
-setTimeout(function () {
-  window.close();
-}, 1000);
+var videos = getVideos();
+processVideos(videos);
+logFinish();

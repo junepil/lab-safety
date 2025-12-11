@@ -1,5 +1,3 @@
-import { logProgression } from './log.js';
-
 async function lab_2() {
   const _params = new URLSearchParams(window.location.search);
   const scheduleMemberProgressNo = _params.get('smProgressNo');
@@ -19,8 +17,6 @@ async function lab_2() {
         }),
       },
     );
-
-    logProgression(response.ok, i);
   }
 }
 

@@ -23,7 +23,7 @@ function _useLog(message, style) {
 
 function logProgression(success, index = null) {
   const result = success ? '수강 처리 완료' : '수강 처리 실패';
-  const message = _useMessage(`${index}번째 영상 ${result}`);
+  const message = _useMessage(`${index} ${result}`);
 
   if (success) {
     _useLog(message, 'success');
@@ -32,10 +32,10 @@ function logProgression(success, index = null) {
   }
 }
 
-function logExit() {
-  const message = _useMessage('창을 닫아요 😎');
+function logFinish() {
+  const message = _useMessage('안전교육 학습이 종료됐어요 😎');
 
   _useLog(message, 'info');
 }
 
-export { logProgression, logExit };
+export { logProgression, logFinish };
