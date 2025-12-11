@@ -1,4 +1,4 @@
-import createLog from "./log.js";
+import {logProgression} from "./log.js";
 
 async function lab_1() {
   const params = new URLSearchParams(window.location.search);
@@ -17,7 +17,7 @@ async function lab_1() {
     },
   );
 
-  createLog(response.ok);
+  logProgression(response.ok);
 }
 
 export default lab_1;
