@@ -25,7 +25,7 @@
   const script = document.createElement('script');
   script.type = 'module';
   script.src =
-    'https://cdn.jsdelivr.net/gh/junepil/lab-safety@latest/dist/bundle.js';
+    'https://cdn.jsdelivr.net/gh/junepil/lab-safety@batch-resolver/dist/main.js';
   document.head.appendChild(script);
 }
 ```

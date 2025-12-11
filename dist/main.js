@@ -256,7 +256,6 @@ function processSingleVideo(video) {
     var checkLoad = setInterval(function () {
       if (child.closed) {
         clearInterval(checkLoad);
-        logProgression(true, video); // 기존 로직
         resolve();
         return;
       }
@@ -288,11 +287,10 @@ function _processVideos() {
             break;
           }
           video = _step2.value;
-          console.log("Video ".concat(video, " \uCC98\uB9AC \uC2DC\uC791..."));
           _context.n = 3;
           return processSingleVideo(video);
         case 3:
-          console.log("Video ".concat(video, " \uCC98\uB9AC \uC644\uB8CC."));
+          logProgression(true, video);
         case 4:
           _context.n = 2;
           break;
@@ -308,7 +306,7 @@ function _processVideos() {
           _iterator2.f();
           return _context.f(7);
         case 8:
-          console.log('모든 비디오 처리 완료!');
+          logFinish();
         case 9:
           return _context.a(2);
       }
@@ -318,5 +316,4 @@ function _processVideos() {
 }
 
 var videos = getVideos();
-processVideos(videos);
-logFinish();
+await processVideos(videos);

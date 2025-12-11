@@ -1,4 +1,4 @@
-import { logProgression } from './log';
+import { logProgression, logFinish } from './log';
 
 function getVideos() {
   const table = document.querySelector('#divProgressInfList > table > tbody');
@@ -31,7 +31,6 @@ function processSingleVideo(video) {
     let checkLoad = setInterval(() => {
       if (child.closed) {
         clearInterval(checkLoad);
-        logProgression(true, video); // 기존 로직
         resolve();
         return;
       }
@@ -51,13 +50,10 @@ function processSingleVideo(video) {
 
 async function processVideos(videos) {
   for (const video of videos) {
-    console.log(`Video ${video} 처리 시작...`);
-
     await processSingleVideo(video);
-
-    console.log(`Video ${video} 처리 완료.`);
+    logProgression(true, video);
   }
-  console.log('모든 비디오 처리 완료!');
+  logFinish();
 }
 
 export { getVideos, processVideos };
