@@ -21,11 +21,13 @@
 ### 3. `Console` 탭에 들어가 아래의 코드를 붙여넣고 엔터를 누른다.
 
 ```js
-const script = document.createElement("script");
-script.type = "module";
-script.src =
-  "https://cdn.jsdelivr.net/gh/junepil/lab-safety@latest/dist/bundle.js";
-document.head.appendChild(script);
+{
+  const script = document.createElement("script");
+  script.type = "module";
+  script.src =
+    "https://cdn.jsdelivr.net/gh/junepil/lab-safety@latest/dist/bundle.js";
+  document.head.appendChild(script);
+}
 ```
 
 ## 주의사항 ⚠️
