@@ -25,11 +25,9 @@
   const script = document.createElement('script');
   script.type = 'module';
   script.src =
-    'https://cdn.jsdelivr.net/gh/junepil/lab-safety@latest/dist/bundle.js';
+    'https://cdn.jsdelivr.net/gh/junepil/lab-safety@main/dist/bundle.js';
   document.head.appendChild(script);
 }
 ```
 
-## 주의사항 ⚠️
-
-스크립트를 입력 후 5초 정도 후에 영상 목록 페이지를 새로고침해보세요!
+### 4. 교육 목록을 새로고침한다.
