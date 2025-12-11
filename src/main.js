@@ -10,7 +10,7 @@ if (_params.get('scheduleMemberProgressNo')) {
   await lab_2();
 }
 
-logExit()
+logExit();
 
 setTimeout(() => {
   window.close();

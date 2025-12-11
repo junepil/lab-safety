@@ -4,7 +4,8 @@
   "description": "실험은 한 번도 하지 않지만 비싼 공대 등록금을 내가며 수업을 듣는 컴공 학생들과, 연구실 안전교육을 듣기 귀찮은 모든 사람들을 위한 연구실 안전교육 bypass 스크립트입니다.",
   "main": "src/main.js",
   "scripts": {
-    "build": "rollup -c"
+    "build": "rollup -c",
+    "prettier": "prettier ."
   },
   "repository": {
     "type": "git",
@@ -25,6 +26,7 @@
     "@rollup/plugin-babel": "^6.0.4",
     "@rollup/plugin-commonjs": "^28.0.6",
     "@rollup/plugin-node-resolve": "^16.0.1",
+    "prettier": "^3.7.4",
     "rollup": "^4.44.0"
   }
 }

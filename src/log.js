@@ -34,7 +34,7 @@ function logProgression(success, index = null) {
 
 function logExit() {
   const message = _useMessage('창을 닫아요 😎');
-  
+
   _useLog(message, 'info');
 }
 
