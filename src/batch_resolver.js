@@ -11,20 +11,24 @@ function getVideos() {
     const input = td.lastElementChild;
 
     const functionString = input.getAttribute('onclick');
-    const match = functionString.match(/OpenContentViewPop\w*\((\d+)\)/);
+    const regex = /OpenContentView(Pop\w*)\((\d+)\)/;
+    const match = functionString.match(regex);
 
-    const videoId = Number(match[1]);
-    videos.push(videoId);
+    if (match) {
+      const suffix = match[1]; // "Pop" 또는 "PopAvi"
+      const id = Number(match[2]);
+
+      videos.push({ suffix, id });
+    }
   }
 
   return videos;
 }
 
-function processSingleVideo(video) {
+function processSingleVideo({ suffix, id }) {
   return new Promise((resolve) => {
-    let child = window.open(
-      `/ushm/edu/contentsViewPop.do?scheduleMemberProgressNo=${video}`,
-    );
+    const url = `/ushm/edu/contentsView${suffix}.do?scheduleMemberProgressNo=${id}`;
+    let child = window.open(url);
 
     let isScriptInjected = false;
 
@@ -50,12 +54,12 @@ function processSingleVideo(video) {
 async function processVideos(videos) {
   for (const video of videos) {
     await processSingleVideo(video);
-    logProgression(true, video);
+    logProgression(true, video.id);
   }
 
   logFinish();
   setTimeout(() => {
-    window.reload();
+    location.reload();
   }, 1000);
 }
 

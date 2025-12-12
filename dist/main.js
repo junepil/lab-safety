@@ -238,9 +238,16 @@ function getVideos() {
       var td = row.lastElementChild;
       var input = td.lastElementChild;
       var functionString = input.getAttribute('onclick');
-      var match = functionString.match(/OpenContentViewPop\w*\((\d+)\)/);
-      var videoId = Number(match[1]);
-      videos.push(videoId);
+      var regex = /OpenContentView(Pop\w*)\((\d+)\)/;
+      var match = functionString.match(regex);
+      if (match) {
+        var suffix = match[1]; // "Pop" 또는 "PopAvi"
+        var id = Number(match[2]);
+        videos.push({
+          suffix: suffix,
+          id: id
+        });
+      }
     }
   } catch (err) {
     _iterator.e(err);
@@ -249,9 +256,12 @@ function getVideos() {
   }
   return videos;
 }
-function processSingleVideo(video) {
+function processSingleVideo(_ref) {
+  var suffix = _ref.suffix,
+    id = _ref.id;
   return new Promise(function (resolve) {
-    var child = window.open("/ushm/edu/contentsViewPop.do?scheduleMemberProgressNo=".concat(video));
+    var url = "/ushm/edu/contentsView".concat(suffix, ".do?scheduleMemberProgressNo=").concat(id);
+    var child = window.open(url);
     var isScriptInjected = false;
     var checkLoad = setInterval(function () {
       if (child.closed) {
@@ -290,7 +300,7 @@ function _processVideos() {
           _context.n = 3;
           return processSingleVideo(video);
         case 3:
-          logProgression(true, video);
+          logProgression(true, video.id);
         case 4:
           _context.n = 2;
           break;
@@ -308,7 +318,7 @@ function _processVideos() {
         case 8:
           logFinish();
           setTimeout(function () {
-            window.reload();
+            location.reload();
           }, 1000);
         case 9:
           return _context.a(2);
@@ -318,5 +328,34 @@ function _processVideos() {
   return _processVideos.apply(this, arguments);
 }
 
+function submitExam() {
+  return _submitExam.apply(this, arguments);
+}
+function _submitExam() {
+  _submitExam = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {
+    var user, url, payload;
+    return _regenerator().w(function (_context) {
+      while (1) switch (_context.n) {
+        case 0:
+          user = Number(document.querySelector('#divOnLineEduList > table > tbody > tr:first-child > td > input:last-child').getAttribute('value'));
+          url = 'https://safety.konkuk.ac.kr/ushm/edu/examSendSub.do';
+          payload = "scheduleMemberNo=".concat(user, "&contentQuestionNos=35466&answers%5B0%5D=1&contentQuestionNos=35445&answers%5B1%5D=4&contentQuestionNos=35448&answers%5B2%5D=1&contentQuestionNos=33632&answers%5B3%5D=3&contentQuestionNos=33909&answers%5B4%5D=1&contentQuestionNos=34009&answers%5B5%5D=4&contentQuestionNos=34021&answers%5B6%5D=2&contentQuestionNos=35403&answers%5B7%5D=4&contentQuestionNos=34065&answers%5B8%5D=2&contentQuestionNos=35296&answers%5B9%5D=4");
+          _context.n = 1;
+          return fetch(url, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+            },
+            body: payload
+          });
+        case 1:
+          return _context.a(2);
+      }
+    }, _callee);
+  }));
+  return _submitExam.apply(this, arguments);
+}
+
 var videos = getVideos();
 await processVideos(videos);
+await submitExam();
