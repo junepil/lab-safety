@@ -5,7 +5,8 @@
   "main": "src/main.js",
   "scripts": {
     "build": "rm dist/* && rollup -c",
-    "prettier": "prettier ."
+    "prettier": "prettier .",
+    "prepare": "husky"
   },
   "repository": {
     "type": "git",
@@ -28,5 +29,8 @@
     "@rollup/plugin-node-resolve": "^16.0.1",
     "prettier": "^3.7.4",
     "rollup": "^4.44.0"
+  },
+  "dependencies": {
+    "husky": "^9.1.7"
   }
 }
