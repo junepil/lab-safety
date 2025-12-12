@@ -208,34 +208,9 @@ function _lab_() {
 }
 
 var _params = new URLSearchParams(window.location.search);
-function resolveVideo() {
-  return _resolveVideo.apply(this, arguments);
+if (_params.get('scheduleMemberProgressNo')) {
+  await lab_1();
+} else {
+  await lab_2();
 }
-function _resolveVideo() {
-  _resolveVideo = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {
-    return _regenerator().w(function (_context) {
-      while (1) switch (_context.n) {
-        case 0:
-          if (!_params.get('scheduleMemberProgressNo')) {
-            _context.n = 2;
-            break;
-          }
-          _context.n = 1;
-          return lab_1();
-        case 1:
-          _context.n = 3;
-          break;
-        case 2:
-          _context.n = 3;
-          return lab_2();
-        case 3:
-          window.close();
-        case 4:
-          return _context.a(2);
-      }
-    }, _callee);
-  }));
-  return _resolveVideo.apply(this, arguments);
-}
-
-export { resolveVideo as default };
+window.close();
