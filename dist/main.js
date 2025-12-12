@@ -238,7 +238,7 @@ function getVideos() {
       var td = row.lastElementChild;
       var input = td.lastElementChild;
       var functionString = input.getAttribute('onclick');
-      var match = functionString.match(/OpenContentViewPop\((\d+)\)/);
+      var match = functionString.match(/OpenContentViewPop\w*\((\d+)\)/);
       var videoId = Number(match[1]);
       videos.push(videoId);
     }
@@ -262,11 +262,11 @@ function processSingleVideo(video) {
       if (!isScriptInjected && child.document.readyState === 'complete') {
         var script = child.document.createElement('script');
         script.type = 'module';
-        script.src = 'https://cdn.jsdelivr.net/gh/junepil/lab-safety@batch-resolver/dist/video_resolver.js';
+        script.src = 'https://cdn.jsdelivr.net/gh/junepil/lab-safety@f5ddac6/dist/video_resolver.js';
         child.document.head.appendChild(script);
         isScriptInjected = true;
       }
-    }, 500);
+    }, 300);
   });
 }
 function processVideos(_x) {
@@ -307,6 +307,9 @@ function _processVideos() {
           return _context.f(7);
         case 8:
           logFinish();
+          setTimeout(function () {
+            window.reload();
+          }, 1000);
         case 9:
           return _context.a(2);
       }
