@@ -212,6 +212,7 @@ if (window.__IS_AVI__) {
 } else {
   await lab_2();
 }
-setTimeout(function () {
-  window.close();
-}, 2000);
+
+// setTimeout(() => {
+//   window.close();
+// }, 2000);

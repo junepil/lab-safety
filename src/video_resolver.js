@@ -7,6 +7,6 @@ if (window.__IS_AVI__) {
   await lab_2();
 }
 
-setTimeout(() => {
-  window.close();
-}, 2000);
+// setTimeout(() => {
+//   window.close();
+// }, 2000);
