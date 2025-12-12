@@ -270,6 +270,7 @@ function processSingleVideo(_ref) {
         return;
       }
       if (!isScriptInjected && child.document.readyState === 'complete') {
+        child.window.__IS_AVI__ = suffix.includes('Avi');
         var script = child.document.createElement('script');
         script.type = 'module';
         script.src = 'https://cdn.jsdelivr.net/gh/junepil/lab-safety@c965bfb/dist/video_resolver.js';

@@ -207,12 +207,11 @@ function _lab_() {
   return _lab_.apply(this, arguments);
 }
 
-var _params = new URLSearchParams(window.location.search);
-if (_params.get('scheduleMemberProgressNo')) {
+if (window.__IS_AVI__) {
   await lab_1();
 } else {
   await lab_2();
 }
 setTimeout(function () {
   window.close();
-}, 1000);
+}, 2000);
