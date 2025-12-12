@@ -266,7 +266,7 @@ function processSingleVideo(video) {
         child.document.head.appendChild(script);
         isScriptInjected = true;
       }
-    }, 300);
+    }, 500);
   });
 }
 function processVideos(_x) {
