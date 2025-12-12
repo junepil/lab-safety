@@ -154,7 +154,7 @@ function _useLog(message, style) {
   console.log(message, styleString);
 }
 function logProgression(success) {
-  var index = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+  var index = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
   var result = success ? '수강 처리 완료' : '수강 처리 실패';
   var message = _useMessage("".concat(index, "\uBC88\uC9F8 \uC601\uC0C1 ").concat(result));
   if (success) {
@@ -250,6 +250,5 @@ if (_params.get('scheduleMemberProgressNo')) {
   await lab_2();
 }
 logExit();
-setTimeout(function () {
-  window.close();
-}, 1000);
+
+// window.close();

@@ -12,6 +12,4 @@ if (_params.get('scheduleMemberProgressNo')) {
 
 logExit();
 
-setTimeout(() => {
-  window.close();
-}, 1000);
+// window.close();

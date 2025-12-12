@@ -21,7 +21,7 @@ function _useLog(message, style) {
   console.log(message, styleString);
 }
 
-function logProgression(success, index = null) {
+function logProgression(success, index = 1) {
   const result = success ? '수강 처리 완료' : '수강 처리 실패';
   const message = _useMessage(`${index}번째 영상 ${result}`);
 
