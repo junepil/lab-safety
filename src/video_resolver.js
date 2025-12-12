@@ -9,4 +9,6 @@ if (_params.get('scheduleMemberProgressNo')) {
   await lab_2();
 }
 
-window.close();
+setTimeout(() => {
+  window.close();
+}, 1000);

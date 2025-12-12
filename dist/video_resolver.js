@@ -213,4 +213,6 @@ if (_params.get('scheduleMemberProgressNo')) {
 } else {
   await lab_2();
 }
-window.close();
+setTimeout(function () {
+  window.close();
+}, 1000);
