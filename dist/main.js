@@ -272,7 +272,7 @@ function processSingleVideo(_ref) {
       if (!isScriptInjected && child.document.readyState === 'complete') {
         var script = child.document.createElement('script');
         script.type = 'module';
-        script.src = 'https://cdn.jsdelivr.net/gh/junepil/lab-safety@ad77cd0/dist/video_resolver.js';
+        script.src = 'https://cdn.jsdelivr.net/gh/junepil/lab-safety@c965bfb/dist/video_resolver.js';
         child.document.head.appendChild(script);
         isScriptInjected = true;
       }
