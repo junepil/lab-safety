@@ -262,6 +262,9 @@ function processSingleVideo(_ref) {
   return new Promise(function (resolve) {
     var url = "/ushm/edu/contentsView".concat(suffix, ".do?scheduleMemberProgressNo=").concat(id);
     var child = window.open(url);
+    var currentUrl = child.location.href;
+    var readyState = child.document.readyState;
+    var isAviType = suffix.includes('Avi');
     var isScriptInjected = false;
     var checkLoad = setInterval(function () {
       if (child.closed) {
@@ -269,14 +272,26 @@ function processSingleVideo(_ref) {
         resolve();
         return;
       }
-      if (!isScriptInjected && child.document.readyState === 'complete') {
-        child.window.__IS_AVI__ = suffix.includes('Avi');
-        var script = child.document.createElement('script');
-        script.type = 'module';
-        script.src = 'https://cdn.jsdelivr.net/gh/junepil/lab-safety@830e54e/dist/video_resolver.js';
-        child.document.head.appendChild(script);
-        isScriptInjected = true;
-      }
+      try {
+        if (currentUrl.indexOf('about:blank') === -1 && readyState === 'complete') {
+          var isReadyToInject = false;
+          if (isAviType) {
+            if (currentUrl.includes('.html')) {
+              isReadyToInject = true;
+            }
+          } else {
+            isReadyToInject = true;
+          }
+          if (isReadyToInject) {
+            child.window.__IS_AVI__ = isAviType;
+            var script = child.document.createElement('script');
+            script.type = 'module';
+            script.src = 'https://cdn.jsdelivr.net/gh/junepil/lab-safety@393d4e2/dist/video_resolver.js';
+            child.document.head.appendChild(script);
+            isScriptInjected = true;
+          }
+        }
+      } catch (e) {}
     }, 500);
   });
 }
